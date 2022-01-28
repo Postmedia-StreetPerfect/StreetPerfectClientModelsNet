@@ -704,6 +704,24 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string text_record_flag { get; set; }
 
+
+		/// <summary>
+		/// Text Record Name
+		/// 
+		/// Depending on the Text Record Flag, this field may hold extra verbose information (ie the name of an Apartment Building)
+		/// </summary>
+		[DataMember]
+		public string text_record_name { get; set; }
+
+
+		/// <summary>
+		/// French Text Record Name
+		/// 
+		/// Same as above, some records have both an English and French version of this field
+		/// </summary>
+		[DataMember]
+		public string text_record_name_fr { get; set; }
+
 		/// <summary>
 		/// Country Code
 		/// </summary>
