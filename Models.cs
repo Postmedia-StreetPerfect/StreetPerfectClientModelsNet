@@ -14,6 +14,8 @@ namespace StreetPerfect.Models
 	{
 		public const string DataNamespace = "http://StreetPerfect.com/wcf/models/";
 		public const string ServiceNamespace = "http://StreetPerfect.com/wcf/";
+		public const string Version = "11.0.1";
+		public const string License = "Copyright © 1993-2022, Postmedia Network Inc";
 	}
 
 	public class TokenResponse
