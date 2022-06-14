@@ -1,10 +1,53 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
 
 namespace StreetPerfect.Models
 {
+
+	public class BatchUploadRequest
+	{
+		/// <summary>
+		/// This is just a regular unicode string that your json framework will encode as utf8
+		/// </summary>
+		public string Data { get; set; }
+
+		/// <summary>
+		/// Specify the encoding of the EncodedData (see batch/encodings for a list of possible encodings to use)
+		/// 
+		/// Note that iso-8859-1 is best for this.
+		/// </summary>
+		public string Encoding { get; set; }
+	}
+
+	public class BatchUploadForm
+	{
+		/// <summary>
+		/// file a form-data file input 
+		/// </summary>
+		public IFormFile file { get; set; }
+
+		/// <summary>
+		/// Specify the encoding of the file (see batch/encodings for a list of possible encodings to use)
+		/// 
+		/// Note that data must be ultimately iso-8859-1 compatible, but UTF8 is assumed if not set.
+		/// </summary>
+		public string encoding { get; set; }
+
+		/// <summary>
+		/// If file is zipped you must set this true
+		/// </summary>
+		public bool is_zipped { get; set; }
+	}
+
+	public class BatchEncoding
+	{
+		public string Encoding { get; set; }
+		public int CodePage { get; set; }
+	}
+
 	public class caBatchRunRequest
 	{
 		public BatchConfig Config { get; set; }
