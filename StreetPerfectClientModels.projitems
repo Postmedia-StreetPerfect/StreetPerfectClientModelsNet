@@ -9,6 +9,7 @@
     <Import_RootNamespace>StreetPerfectClientModels</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)BatchModels.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Models.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)TypeaheadModels.cs" />
   </ItemGroup>
