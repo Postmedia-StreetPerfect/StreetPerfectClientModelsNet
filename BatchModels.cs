@@ -398,7 +398,7 @@ namespace StreetPerfect.Models
 		///   "U:c" where "c" is a user defined field delimiter, can be any printable character not part of the data stream
 		///
 		/// </summary>
-		/// <example>F</example>
+		/// <example>C</example>
 		public string FileFormat { get; set; }
 
 		/// <summary>
