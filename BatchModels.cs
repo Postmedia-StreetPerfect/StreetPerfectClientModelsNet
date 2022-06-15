@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Amazon.ECS.Model;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Security.Policy;
 using System.Text;
 
 namespace StreetPerfect.Models
@@ -39,7 +41,7 @@ namespace StreetPerfect.Models
 		/// <summary>
 		/// If file is zipped you must set this true
 		/// </summary>
-		public bool is_zipped { get; set; }
+		public bool? is_zipped { get; set; }
 	}
 
 	public class BatchEncoding
@@ -78,7 +80,7 @@ namespace StreetPerfect.Models
 	public class BatchStatus
 	{
 		//public enum Status { NotFound, Provisioning, Pending, Running, Finished, Error }
-		public string CurrentStatus { get; set; }
+		public string Status { get; set; }
 		public string Log { get; set; }
 		public DateTime? StartTimeUtc { get; set; }
 		public DateTime? StopTimeUtc { get; set; }
@@ -89,34 +91,192 @@ namespace StreetPerfect.Models
 	public class BatchConfig
 	{
 		/// <summary>
-		/// PreferredUnitDesignatorKeyword
+		/// Defaults to 'SUITE'
+		/// 
+		/// | English Abbr. | French Abbr. | English Full Name | French Full Name |
+		/// |---------------|--------------|-------------------|------------------|
+		/// | ‘UNIT’        | ‘UNITE’      | ‘UNIT’            | ‘UNITE’          |
+		/// | ‘APT’         | ‘APP’        | ‘APARTMENT’       | ‘APPARTMENT’ |
+		/// | ‘SUITE’       | ‘BUREAU’     | ‘SUITE’           | ‘BUREAU’ |
+		/// | ‘TH’          |              | ‘TOWNHOUSE’ |
+		/// | ‘TWNHSE’      |              | ‘TOWNHOUSE’ |
+		/// | ‘RM’          |              | ‘ROOM’  |
+		/// | ‘PH’          |              | ‘PENTHOUSE’  |
+		/// | ‘PIECE’       |              |                   | ‘PIECE’  |
+		/// | ‘SALLE’       |              |                   | ‘SALLE’ |
 		/// </summary>
 		/// <example>SUITE</example>
-		public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
+		public string PreferredUnitDesignatorKeyword { get; set; }
 
 		/// <summary>
-		/// PreferredUnitDesignatorStyle
+		/// Defaults to 'K'
+		/// 
+		/// 'K' Keyword Style
+		/// 
+		/// e.g. 123 MAIN ST SUITE 5
+		/// 
+		/// 'W' Western Style
+		/// 
+		/// e.g. 5-123 MAIN ST
 		/// </summary>
 		/// <example>K</example>
-		public string PreferredUnitDesignatorStyle { get; set; } = "K";
+		public string PreferredUnitDesignatorStyle { get; set; }
 
 		/// <summary>
-		/// OutputFormatGuide
+		/// Defaults to 'N'
+		/// 
+		/// 'N' - Natural
+		/// Follows the language rules:
+		/// - Street type placement relative to street name.
+		/// - English types always follow street names.
+		/// - Upper case
+		///  
+		/// 'S' - Street
+		/// - Forces the street name to always appear first
+		/// - Upper case
+		/// 
+		/// Alternate values
+		/// 1. Same as N +
+		/// 2. Same as S +
+		/// 3. Same as N with upper case French accents +
+		/// 4. Same as S with upper case French accents +
+		/// 5. Same as N with mixed case +
+		/// 6. Same as S with mixed case +
+		/// 7. Same as N with mixed case French accents +
+		/// 8. Same as S with mixed case French accents +
+		/// 
+		/// ( + Only accessible from the Format function )
 		/// </summary>
 		/// <example>N</example>
-		public string OutputFormatGuide { get; set; } = "N";
-		public string ExceptionReportLevel { get; set; } = "D";
-		public string PrintMessageNumbers { get; set; } = "N";
-		public string PrintInformationMessages { get; set; } = "Y";
-		public string PrintChangeMessages { get; set; } = "Y";
-		public string PrintErrorMessages { get; set; } = "Y";
-		public string PrintTryMessages { get; set; } = "Y";
-		public string PrintOptimizeMessages { get; set; } = "Y";
+		public string OutputFormatGuide { get; set; }
 
 		/// <summary>
+		/// Defaults to 'D'
+		/// 
+		/// 'D' Detail Report - Print detail messages.
+		/// 
+		/// 'S' Summary Report - Print summary only.
+		/// 
+		/// 'E' Error Report - Print errors only.
+		/// 
+		/// 'N' No Report
+		/// </summary>
+		/// <example>D</example>
+		public string ExceptionReportLevel { get; set; }
+
+		/// <summary>
+		/// Controls what type of message codes are returned with the correction messages.
+		/// 
+		/// Defaults to 'N'
+		/// 
+		/// 'Y' - returns a 3 digit prefix to address correction messages for
+		/// programmatic use. These may be used to provide a filtering
+		/// capability. Message codes can be found in the DocumentFiles
+		/// installation folder.
+		/// 
+		/// 'N' - returns a 3 character prefix to address correction messages
+		/// indicating message class. For Canadian product only, these
+		/// prefixes are:
+		/// 
+		/// INP - Original input line
+		/// 
+		/// INF - Informational message
+		/// 
+		/// OPT - Optimization message
+		/// 
+		/// CHG - Change message
+		/// 
+		/// TRY - Try message - engine has identified one or more possibilities as a potential correction but there was insufficient data or ambiguous results making identification of a correction unreliable.
+		/// 
+		/// ERR - Error message
+		/// | Value | Print Message Class | Return Message Class | Print Message Numbers | Return Message Numbers |
+		/// |-------|---------------------|----------------------|-----------------------|------------------------|
+		/// |  N/0  |         N           |           N          |           N           |            N           | 
+		/// |  Y/1  |         N           |           N          |           Y           |            N           | 
+		/// |    2  |         N           |           N          |           N           |            Y           | 
+		/// |    3  |         N           |           N          |           Y           |            Y           | 
+		/// |    4  |         N           |           Y          |           N           |            Y           | 
+		/// |    5  |         N           |           Y          |           Y           |            Y           | 
+		/// |    6  |         Y           |           Y          |           Y           |            Y           | 
+		/// </summary>
+		/// <example>N</example>
+		public string PrintMessageNumbers { get; set; } = "N";
+
+		/// <summary>
+		/// Defaults to 'false'
+		/// 
+		/// 'true' - Yes, print information messages in exception report.
+		/// 
+		/// This includes items from the Canada Post LVR (Text 4) file.
+		/// 
+		/// 'false' - No, do not print information messages.
+		/// </summary>
+		/// <example>true</example>
+		public bool? PrintInformationMessages { get; set; }
+
+		/// <summary>
+		/// Defaults to 'true'
+		/// 
+		/// 'true' - print change messages in exception report.
+		/// - This will identify changes between the old and corrected address.
+		/// 
+		/// 'false' - do not print change messages.
+		/// </summary>
+		/// <example>true</example>
+		public bool? PrintChangeMessages { get; set; }
+
+		/// <summary>
+		/// Defaults to 'true'
+		/// 
+		/// 'true' - print error messages in exception report.
+		/// - This will document specific address errors.
+		/// 
+		/// 'false' - do not print error messages.
+		/// </summary>
+		/// <example>true</example>
+		public bool? PrintErrorMessages { get; set; }
+
+		/// <summary>
+		/// Defaults to 'true'
+		/// 
+		/// 'true' - print try messages in exception report. This will list the best possible address corrections up to the maximum tries (SB_IN_PRINT_MAX_TRY_MESS)
+		/// 
+		/// 'false' - do not print try messages.		
+		/// </summary>
+		/// <example>true</example>
+		public bool? PrintTryMessages { get; set; }
+
+		/// <summary>
+		/// Defaults to 'true'
+		/// 
+		/// 'true' - print optimization messages in exception report. This will list optimization performed on the address. This occurs only if Optimum Address Flag (OptimizeAddress) = 'Y'
+		/// 
+		/// 'false' - do not print optimization messages.
+		/// </summary>
+		/// <example>true</example>
+		public bool? PrintOptimizeMessages { get; set; }
+
+
+		/// <summary>
+		/// 'Y' - replace address components with Canada Post symbols where possible.
+		/// 
+		/// E.g. 123 KING STREET EAST Input
+		/// 
+		/// 123 KING ST E Output
+		/// 
+		/// 'N' - No, do not optimize address to Canada Post symbols.
+		/// 
+		/// 'S' - Standardize, perform a series of possible changes to the input address including:
+		/// 
+		/// - convert of all CPC keywords to symbols
+		/// - remove Extra Info and Unidentified Components from address line
+		/// - change input municipality name to CPC database municipality name
+		/// - format unit / apt / suite information according to PreferredUnitDesignatorStyle keyword
+		/// - The Correct and Parse APIs will honour the OutputFormatGuide parameter so that it is possible to receive mixed case or French accented data results from these APIs. 
 		/// 
 		/// </summary>
-		public string OptimizeAddress { get; set; } = "S";
+		/// <example>S</example>
+		public string OptimizeAddress { get; set; }
 
 
 		/// <summary>
@@ -133,17 +293,74 @@ namespace StreetPerfect.Models
 		///  
 		///  'Z'   transaction trace + sql statement trace
 		/// </summary>
-		public string ProcessErrors { get; set; } = "N";
+		/// <example>N</example>
+		public string ProcessErrors { get; set; }
+
 		//public string ReportByCompanyID { get; set; } = "SAMP";
 		//public string ReportForCompanyID { get; set; } = "SAMP";
 		//public string ReportFileID { get; set; } = "001";
-		public int? ErrorTolerance { get; set; } = 2;
-		public int? MaximumTryMessages { get; set; } = 5;
-		public string CorrectLvrAddress { get; set; } = "Q";
-		public string CorrectLvrAmbiguity { get; set; } = "Q";
-		public string CorrectRuralAddress { get; set; } = "Q";
-		public string ReportAllUnidentified { get; set; } = "Y";
-		public string ReportOrphanUdkAsExtraInfo { get; set; } = "Y";
+
+		/// <summary>
+		/// Error Tolerance Indicator
+		/// - Determines how “closely” an input address must come to a Canada Post address to be considered a match.
+		/// - The value indicates the number of components that may be in variance.
+		/// - Allowed values; 0 - 4 
+		/// </summary>
+		/// <example>2</example>
+		public int? ErrorTolerance { get; set; }
+
+		/// <summary>
+		/// Maximum Tries Flag
+		/// - The maximum number of possible alternate addresses to print if unable to correct.
+		/// - These alternate addresses will appear on the exception report.
+		/// </summary>
+		/// <example>5</example>
+		public int? MaximumTryMessages { get; set; }
+
+		/// <summary>
+		/// ‘Y’ Yes – standard correction processing occurs. Invalid or not correctable rural addresses returned as “I/N”. 
+		///This setting maximizes actual address accuracy but minimizes CPC Certification Accuracy.
+		///
+		/// ‘N’ No – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
+		/// Increment "Questionable" LVR count. This setting minimizes actual address accuracy but maximizes CPC Certification Accuracy.
+		///
+		/// ‘Q’ Questionable – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
+		/// Increment "Questionable" LVR count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
+		/// </summary>
+		/// <example>Q</example>
+		public string CorrectLvrAddress { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>Q</example>
+		public string CorrectLvrAmbiguity { get; set; }
+
+		/// <summary>
+		/// Correct rural addresses
+		/// 
+		/// ‘Y’ Yes – standard correction processing occurs. Invalid or	not correctable rural addresses returned as “I/N”. This setting maximizes actual address accuracy but minimizes CPC Certification Accuracy.
+		/// 
+		/// ‘N’ No - If valid input address return input address as V. If valid rural PC input, return input address as V. Increment 
+		///"Questionable" rural count.This setting minimizes actual address accuracy but maximizes CPC Certification Accuracy.
+		/// 
+		/// ‘Q’ Questionable – Attempt to correct record. If not	correctable but valid rural PC input, return input address as V.Increment 
+		///"Questionable" rural count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
+		/// </summary>
+		/// <example>Q</example>
+		public string CorrectRuralAddress { get; set; }
+
+		/// <summary>
+		/// Report all unidentified address components
+		/// </summary>
+		/// <example>true</example>
+		public bool? ReportAllUnidentified { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>true</example>
+		public bool? ReportOrphanUdkAsExtraInfo { get; set; }
 
 
 		/// <summary>
@@ -152,7 +369,8 @@ namespace StreetPerfect.Models
 		///   "C" for correction, "V" for validation, "P" for parse
 		///
 		/// </summary>
-		public string Function { get; set; } = "C";
+		/// <example>C</example>
+		public string Function { get; set; }
 
 		/// <summary>
 		///
@@ -165,10 +383,9 @@ namespace StreetPerfect.Models
 		/// * 'C' Corrected
 		/// * 'F' Foreign
 		///
-		/// "Yes" for yes "No" for no
-		///
 		/// </summary>
-		public string OutputStatusFlag { get; set; } = "Yes";
+		/// <example>true</example>
+		public bool? OutputStatusFlag { get; set; }
 
 		/// <summary>
 		///
@@ -181,7 +398,8 @@ namespace StreetPerfect.Models
 		///   "U:c" where "c" is a user defined field delimiter, can be any printable character not part of the data stream
 		///
 		/// </summary>
-		public string FileFormat { get; set; } = "F";
+		/// <example>F</example>
+		public string FileFormat { get; set; }
 
 		/// <summary>
 		///
@@ -208,7 +426,8 @@ namespace StreetPerfect.Models
 		/// * AddressLineLength
 		///
 		/// </summary>
-		public string AddressFormat { get; set; } = "L";
+		/// <example>L</example>
+		public string AddressFormat { get; set; }
 
 		/// <summary>
 		///
@@ -217,26 +436,49 @@ namespace StreetPerfect.Models
 		///   Note: This is strictly for bypassing header records which are written directly to the output file. 
 		///   If there is a header record requiring additional processing, specify its position within the file.
 		///
+		///	 (one's based)
 		/// </summary>
+		/// <example></example>
 		public int? HeaderRecord { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example></example>
+		/// <example></example>
 		public int? HeaderRecordFields { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example></example>
+		/// <example></example>
 		public int? HeaderRecordLength { get; set; }
-		public int? FirstRecord { get; set; } = 2;
+
+		/// <summary>
+		/// Record to start processing - one's based.
+		/// </summary>
+		/// <example></example>
+		/// <example>2</example>
+		public int? FirstRecord { get; set; }
 
 		/// <summary>
 		///
 		///  Total number of records to process. Use 0 to indicate all.
 		///
 		/// </summary>
-		public int? RecordsToProcess { get; set; } = 0;
+		/// <example>0</example>
+		public int? RecordsToProcess { get; set; }
 
 		/// <summary>
 		///
-		///   specify total number of fields for output file:
-		///   ( used for processing comma/tab delimited fields )
+		///   Specify total number of fields for OUTPUT file.
+		///   
+		///   ( used for processing comma/tab delimited fields)
 		///
 		/// </summary>
-		public int? FieldsPerRecord { get; set; } = 9;
+		/// <example>0</example>
+		public int? FieldsPerRecord { get; set; }
 
 		/// <summary>
 		///
@@ -246,33 +488,38 @@ namespace StreetPerfect.Models
 		///   "Yes" for yes "No" for no
 		///
 		/// </summary>
-		public string OutputQuotedData { get; set; } = "No";
+		/// <example>false</example>
+		public bool? OutputQuotedData { get; set; }
 
 		/// <summary>
 		///
 		///   Force formatting of foreign, invalid or not correctable
-		///   default is to format only valid or corrected records
-		///   applies to batch api with output format guide &gt;= 3 &amp; &lt;= 8
 		///   
-		///   "Yes" for yes "No" for no
-		///
+		///   Default is to format only valid or corrected records
+		///   
+		///   Applies to batch api with output format guide &gt;= 3 &amp; &lt;= 8
+		///   
 		/// </summary>
-		public string FormatAllInputRecords { get; set; } = "No";
+		/// <example>false</example>
+		public bool? FormatAllInputRecords { get; set; }
 
 		/// <summary>
 		///
 		///   Specify Postal Code fixed at 6 or 7 characters.
+		///   
 		///   Or specify 'D' for original default behaviour.
 		///  
 		/// </summary>
-		public string PostalCodeFormatGuide { get; set; } = "D";
+		/// <example>D</example>
+		public string PostalCodeFormatGuide { get; set; }
 
 		/// <summary>
 		///
 		///   For missing input country codes specify a default value
 		///   
 		/// </summary>
-		public string DefaultCountryCode { get; set; } = "CAN";
+		/// <example>CAN</example>
+		public string DefaultCountryCode { get; set; }
 
 		/// <summary>
 		///
@@ -280,7 +527,8 @@ namespace StreetPerfect.Models
 		///   country code enable "OverRideInputCountryCode" 
 		///
 		/// </summary>
-		public string OverRideInputCountryCode { get; set; } = "YES";
+		/// <example>true</example>
+		public bool? OverRideInputCountryCode { get; set; }
 
 
 		/// <summary>
@@ -290,7 +538,8 @@ namespace StreetPerfect.Models
 		///   I=INPUT, E=ENGLISH, F=FRENCH, C=CPC SPECIFICATION 
 		///   
 		/// </summary>
-		public string DefaultLanguageCode { get; set; } = "I";
+		/// <example>I</example>
+		public string DefaultLanguageCode { get; set; }
 
 		/// <summary>
 		///
@@ -298,7 +547,8 @@ namespace StreetPerfect.Models
 		///   language code enable "OverRideInputLanguageCode" 
 		///
 		/// </summary>
-		public string OverRideInputLanguageCode { get; set; } = "YES";
+		/// <example>true</example>
+		public bool? OverRideInputLanguageCode { get; set; }
 
 		/// <summary>
 		///
@@ -325,11 +575,18 @@ namespace StreetPerfect.Models
 		///   
 		/// If only Input* fields are defined Output* = Input*.
 		///
+		/// the example values are setup for a comma delimited data file with a heading: key,addressee,address,city,province,postal_code
 		/// </summary>
+		/// <example>1</example>
 		public int? InputKeyOffset { get; set; }
 		public int? InputKeyLength { get; set; }
 		public int? InputLanguageOffset { get; set; }
 		public int? InputLanguageLength { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>2</example>
 		public int? InputRecipientOffset { get; set; }
 		public int? InputRecipientLength { get; set; }
 		public int? InputStreetNumberOffset { get; set; }
@@ -338,48 +595,37 @@ namespace StreetPerfect.Models
 		public int? InputStreetNameLength { get; set; }
 		public int? InputUnitNumberOffset { get; set; }
 		public int? InputUnitNumberLength { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>3</example>
 		public int? InputAddressLineOffset { get; set; }
 		public int? InputAddressLineLength { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>4</example>
 		public int? InputCityOffset { get; set; }
 		public int? InputCityLength { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>5</example>
 		public int? InputProvinceStateOffset { get; set; }
 		public int? InputProvinceStateLength { get; set; }
+
+		/// <summary>
+		/// 
+		/// </summary>
+		/// <example>6</example>
 		public int? InputPostalZipCodeOffset { get; set; }
 		public int? InputPostalZipCodeLength { get; set; }
 		public int? InputCountryOffset { get; set; }
 		public int? InputCountryLength { get; set; }
 
-
-		/// <summary>
-		///   comma/tab delimited records are defined by simply identifying the fields
-		///   and the order in which they occur in the record. The offset parameter is used,
-		///   but here its meaning is the ordinal position of the field in the record.
-		///
-		///   The following fields may be defined:
-		/// * unique key
-		/// * addressee,
-		/// * street number
-		/// * street name
-		/// * unit number
-		/// * address line,
-		/// * city
-		/// * province/state 
-		/// * postal/zip code
-		/// * country 
-		///
-		///  You may define two sets of fields, Input* and Output*.
-		///   
-		///  If only Input* fields are defined Output* = Input*.
-		///
-		///  Note:  *StreetNumber, *StreetName, and *UnitNumber are not available for USA
-		///
-		///  Note:
-		///  
-		///  It is possible to have different record formats for CAN and USA addresses
-		///  by using country specific keywords of the format CAN_Input* / USA_Input*
-		///  and, if necessary, CAN_Output* /USA_Output* keywords.
-		///
-		/// </summary>
 	}
 
 
