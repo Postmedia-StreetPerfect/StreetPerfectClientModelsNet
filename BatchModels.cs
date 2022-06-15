@@ -80,17 +80,30 @@ namespace StreetPerfect.Models
 		//public enum Status { NotFound, Provisioning, Pending, Running, Finished, Error }
 		public string CurrentStatus { get; set; }
 		public string Log { get; set; }
-		public DateTime StartTimeUtc { get; set; }
-		public DateTime StopTimeUtc { get; set; }
+		public DateTime? StartTimeUtc { get; set; }
+		public DateTime? StopTimeUtc { get; set; }
 		public string Msg { get; set; }
 	}
 
 
 	public class BatchConfig
 	{
-
+		/// <summary>
+		/// PreferredUnitDesignatorKeyword
+		/// </summary>
+		/// <example>SUITE</example>
 		public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
+
+		/// <summary>
+		/// PreferredUnitDesignatorStyle
+		/// </summary>
+		/// <example>K</example>
 		public string PreferredUnitDesignatorStyle { get; set; } = "K";
+
+		/// <summary>
+		/// OutputFormatGuide
+		/// </summary>
+		/// <example>N</example>
 		public string OutputFormatGuide { get; set; } = "N";
 		public string ExceptionReportLevel { get; set; } = "D";
 		public string PrintMessageNumbers { get; set; } = "N";
