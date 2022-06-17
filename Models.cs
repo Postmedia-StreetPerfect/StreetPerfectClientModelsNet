@@ -826,8 +826,11 @@ namespace StreetPerfect.Models
 	public class GetInfoResponse
 	{
 
+		//[DataMember]
+		//public List<string> info_old { get; set; }
+
 		[DataMember]
-		public List<string> info { get; set; }
+		public Dictionary<string, string> info { get; set; }
 
 		[DataMember]
 		public string status_flag { get; set; }
