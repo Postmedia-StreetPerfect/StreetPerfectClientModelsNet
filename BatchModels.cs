@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Security.Policy;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace StreetPerfect.Models
 {
@@ -79,7 +80,7 @@ namespace StreetPerfect.Models
 
 	public class BatchStatus
 	{
-		//public enum Status { NotFound, Provisioning, Pending, Running, Finished, Error }
+		public enum StatusType { Unknown, Error, Empty, Starting, Running, Stopping, Stopped, InputReady, OutputReady }
 		public string Status { get; set; }
 		public string Log { get; set; }
 		public DateTime? StartTimeUtc { get; set; }
@@ -90,6 +91,12 @@ namespace StreetPerfect.Models
 
 	public class BatchConfig
 	{
+		[JsonIgnore]
+		public string SPDatabasePath { get; set; }
+
+		[JsonIgnore]
+		public string SPIOPath { get; set; }
+
 		/// <summary>
 		/// Defaults to 'SUITE'
 		/// 
