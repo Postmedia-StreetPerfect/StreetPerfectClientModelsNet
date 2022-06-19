@@ -97,6 +97,9 @@ namespace StreetPerfect.Models
 		[JsonIgnore]
 		public string SPIOPath { get; set; }
 
+		[JsonInclude]
+		public string DatabaseOptions { get; set; }
+
 		/// <summary>
 		/// Defaults to 'SUITE'
 		/// 
