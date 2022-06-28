@@ -16,13 +16,6 @@ namespace StreetPerfect.Models
         /// This is just a regular unicode string that your json framework will encode as utf8
         /// </summary>
         public string Data { get; set; }
-
-        /// <summary>
-        /// Specify the encoding of the EncodedData (see batch/encodings for a list of possible encodings to use)
-        /// 
-        /// Note that iso-8859-1 is best for this.
-        /// </summary>
-        public string Encoding { get; set; }
     }
 
     public class BatchUploadForm
@@ -49,13 +42,6 @@ namespace StreetPerfect.Models
     {
         public string Encoding { get; set; }
         public int CodePage { get; set; }
-    }
-
-    public class caBatchRunRequest
-    {
-        public BatchConfig Config { get; set; }
-        public string InputData { get; set; }
-
     }
 
     public class caBatchRunResponse
@@ -115,7 +101,7 @@ namespace StreetPerfect.Models
         [JsonIgnore]
         public string SPIOPath { get; set; }
 
-        [JsonInclude]
+        [JsonIgnore]
         public string DatabaseOptions { get; set; }
 
         /// <summary>
