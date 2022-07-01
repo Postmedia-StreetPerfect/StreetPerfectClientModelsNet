@@ -35,7 +35,7 @@ namespace StreetPerfect.Models
         /// <summary>
         /// If file is zipped you must set this true
         /// </summary>
-        public bool? is_zipped { get; set; }
+        public bool is_zipped { get; set; } = false;
     }
 
     public class BatchEncoding
@@ -120,7 +120,7 @@ namespace StreetPerfect.Models
         /// | ‘SALLE’       |              |                   | ‘SALLE’ |
         /// </summary>
         /// <example>SUITE</example>
-        public string PreferredUnitDesignatorKeyword { get; set; }
+        public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
 
         /// <summary>
         /// Defaults to 'K'
@@ -134,7 +134,7 @@ namespace StreetPerfect.Models
         /// e.g. 5-123 MAIN ST
         /// </summary>
         /// <example>K</example>
-        public string PreferredUnitDesignatorStyle { get; set; }
+        public string PreferredUnitDesignatorStyle { get; set; } = "K";
 
         /// <summary>
         /// Defaults to 'N'
@@ -162,7 +162,7 @@ namespace StreetPerfect.Models
         /// ( + Only accessible from the Format function )
         /// </summary>
         /// <example>N</example>
-        public string OutputFormatGuide { get; set; }
+        public string OutputFormatGuide { get; set; } = "N";
 
         /// <summary>
         /// Defaults to 'D'
@@ -176,7 +176,7 @@ namespace StreetPerfect.Models
         /// 'N' No Report
         /// </summary>
         /// <example>D</example>
-        public string ExceptionReportLevel { get; set; }
+        public string ExceptionReportLevel { get; set; } = "D";
 
         /// <summary>
         /// Controls what type of message codes are returned with the correction messages.
@@ -226,7 +226,7 @@ namespace StreetPerfect.Models
         /// 'false' - No, do not print information messages.
         /// </summary>
         /// <example>true</example>
-        public bool? PrintInformationMessages { get; set; }
+        public bool PrintInformationMessages { get; set; } = true;
 
         /// <summary>
         /// Defaults to 'true'
@@ -237,7 +237,7 @@ namespace StreetPerfect.Models
         /// 'false' - do not print change messages.
         /// </summary>
         /// <example>true</example>
-        public bool? PrintChangeMessages { get; set; }
+        public bool PrintChangeMessages { get; set; } = true;
 
         /// <summary>
         /// Defaults to 'true'
@@ -248,7 +248,7 @@ namespace StreetPerfect.Models
         /// 'false' - do not print error messages.
         /// </summary>
         /// <example>true</example>
-        public bool? PrintErrorMessages { get; set; }
+        public bool PrintErrorMessages { get; set; } = true;
 
         /// <summary>
         /// Defaults to 'true'
@@ -258,7 +258,7 @@ namespace StreetPerfect.Models
         /// 'false' - do not print try messages.		
         /// </summary>
         /// <example>true</example>
-        public bool? PrintTryMessages { get; set; }
+        public bool PrintTryMessages { get; set; } = true;
 
         /// <summary>
         /// Defaults to 'true'
@@ -268,7 +268,7 @@ namespace StreetPerfect.Models
         /// 'false' - do not print optimization messages.
         /// </summary>
         /// <example>true</example>
-        public bool? PrintOptimizeMessages { get; set; }
+        public bool PrintOptimizeMessages { get; set; } = true;
 
 
         /// <summary>
@@ -290,7 +290,7 @@ namespace StreetPerfect.Models
         /// 
         /// </summary>
         /// <example>S</example>
-        public string OptimizeAddress { get; set; }
+        public string OptimizeAddress { get; set; } = "S";
 
 
         /// <summary>
@@ -308,7 +308,7 @@ namespace StreetPerfect.Models
         ///  'Z'   transaction trace + sql statement trace
         /// </summary>
         /// <example>N</example>
-        public string ProcessErrors { get; set; }
+        public string ProcessErrors { get; set; } = "N";
 
         //public string ReportByCompanyID { get; set; } = "SAMP";
         //public string ReportForCompanyID { get; set; } = "SAMP";
@@ -321,7 +321,7 @@ namespace StreetPerfect.Models
         /// - Allowed values; 0 - 4 
         /// </summary>
         /// <example>2</example>
-        public int? ErrorTolerance { get; set; }
+        public int? ErrorTolerance { get; set; } = 2;
 
         /// <summary>
         /// Maximum Tries Flag
@@ -329,7 +329,7 @@ namespace StreetPerfect.Models
         /// - These alternate addresses will appear on the exception report.
         /// </summary>
         /// <example>5</example>
-        public int? MaximumTryMessages { get; set; }
+        public int? MaximumTryMessages { get; set; } = 5;
 
         /// <summary>
         /// ‘Y’ Yes – standard correction processing occurs. Invalid or not correctable rural addresses returned as “I/N”. 
@@ -342,13 +342,13 @@ namespace StreetPerfect.Models
         /// Increment "Questionable" LVR count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
         /// </summary>
         /// <example>Q</example>
-        public string CorrectLvrAddress { get; set; }
+        public string CorrectLvrAddress { get; set; } = "Q";
 
         /// <summary>
         /// 
         /// </summary>
         /// <example>Q</example>
-        public string CorrectLvrAmbiguity { get; set; }
+        public string CorrectLvrAmbiguity { get; set; } = "Q";
 
         /// <summary>
         /// Correct rural addresses
@@ -362,19 +362,19 @@ namespace StreetPerfect.Models
         ///"Questionable" rural count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
         /// </summary>
         /// <example>Q</example>
-        public string CorrectRuralAddress { get; set; }
+        public string CorrectRuralAddress { get; set; } = "Q";
 
         /// <summary>
         /// Report all unidentified address components
         /// </summary>
         /// <example>true</example>
-        public bool? ReportAllUnidentified { get; set; }
+        public bool ReportAllUnidentified { get; set; } = true;
 
         /// <summary>
         /// 
         /// </summary>
         /// <example>true</example>
-        public bool? ReportOrphanUdkAsExtraInfo { get; set; }
+        public bool ReportOrphanUdkAsExtraInfo { get; set; } = true;
 
 
         /// <summary>
@@ -384,7 +384,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>C</example>
-        public string Function { get; set; }
+        public string Function { get; set; } = "C";
 
         /// <summary>
         ///
@@ -399,7 +399,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>true</example>
-        public bool? OutputStatusFlag { get; set; }
+        public bool OutputStatusFlag { get; set; } = true;
 
         /// <summary>
         ///
@@ -413,7 +413,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>C</example>
-        public string FileFormat { get; set; }
+        public string FileFormat { get; set; } = "C";
 
         /// <summary>
         ///
@@ -441,7 +441,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>L</example>
-        public string AddressFormat { get; set; }
+        public string AddressFormat { get; set; } = "L";
 
         /// <summary>
         ///
@@ -474,7 +474,7 @@ namespace StreetPerfect.Models
         /// </summary>
         /// <example></example>
         /// <example>2</example>
-        public int? FirstRecord { get; set; }
+        public int? FirstRecord { get; set; } = 2;
 
         /// <summary>
         ///
@@ -503,7 +503,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>false</example>
-        public bool? OutputQuotedData { get; set; }
+        public bool OutputQuotedData { get; set; } = false;
 
         /// <summary>
         ///
@@ -515,7 +515,7 @@ namespace StreetPerfect.Models
         ///   
         /// </summary>
         /// <example>false</example>
-        public bool? FormatAllInputRecords { get; set; }
+        public bool FormatAllInputRecords { get; set; } = false;
 
         /// <summary>
         ///
@@ -525,7 +525,7 @@ namespace StreetPerfect.Models
         ///  
         /// </summary>
         /// <example>D</example>
-        public string PostalCodeFormatGuide { get; set; }
+        public string PostalCodeFormatGuide { get; set; } = "D";
 
         /// <summary>
         ///
@@ -533,7 +533,7 @@ namespace StreetPerfect.Models
         ///   
         /// </summary>
         /// <example>CAN</example>
-        public string DefaultCountryCode { get; set; }
+        public string DefaultCountryCode { get; set; } = "CAN";
 
         /// <summary>
         ///
@@ -542,7 +542,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>true</example>
-        public bool? OverRideInputCountryCode { get; set; }
+        public bool OverRideInputCountryCode { get; set; } = true;
 
 
         /// <summary>
@@ -553,7 +553,7 @@ namespace StreetPerfect.Models
         ///   
         /// </summary>
         /// <example>I</example>
-        public string DefaultLanguageCode { get; set; }
+        public string DefaultLanguageCode { get; set; } = "I";
 
         /// <summary>
         ///
@@ -562,7 +562,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>true</example>
-        public bool? OverRideInputLanguageCode { get; set; }
+        public bool OverRideInputLanguageCode { get; set; } = true;
 
         /// <summary>
         ///
