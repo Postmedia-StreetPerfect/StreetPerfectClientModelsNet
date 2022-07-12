@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Generic;
+using System.Text;
 using System.Text.Json.Serialization;
 
 namespace StreetPerfect.Models
@@ -443,9 +445,8 @@ namespace StreetPerfect.Models
         ///   First record in the file to start processing
         ///   
         ///   Note: This is strictly for bypassing header records which are written directly to the output file. 
-        ///   If there is a header record requiring additional processing, specify its position within the file.
-        ///
-        ///	 (one's based)
+        ///   If there is a header record requiring additional processing, 
+        ///   specify its position within the file - one's based.
         /// </summary>
         /// <example></example>
         public int? HeaderRecord { get; set; }
@@ -558,6 +559,47 @@ namespace StreetPerfect.Models
         /// </summary>
         /// <example>true</example>
         public bool OverRideInputLanguageCode { get; set; } = true;
+
+        /// <summary>
+        /// 
+        /// Your Canada Post ID, used to customize the StreetPerfectBatchReport.txt file
+        /// 
+        /// </summary>
+        /// <example>YourCpcId</example>
+       public string BatchReportCompanyListId { get; set; }
+
+        /// <summary>
+        /// 
+        /// The next 4 properties are used to customize the StreetPerfectBatchReport.txt file
+        /// with your company name and address
+        /// 
+        /// </summary>
+        /// <example>Postmedia Network Inc</example>
+       public string BatchReportCompanyName { get; set; }
+
+        /// <summary>
+        /// 
+        /// custom company address line 1
+        /// 
+        /// </summary>
+        /// <example>365 BLOOR ST E</example>
+        public string BatchReportCompanyAddressOne { get; set; }
+
+        /// <summary>
+        /// 
+        /// custom company address line 2
+        /// 
+        /// </summary>
+        /// <example>Toronto ON M4W 3L4</example>
+        public string BatchReportCompanyAddressTwo { get; set; }
+
+        /// <summary>
+        /// 
+        /// custom company address line 3
+        /// 
+        /// </summary>
+        /// <example>Canada</example>
+        public string BatchReportCompanyAddressThree { get; set; }
 
         /// <summary>
         ///
