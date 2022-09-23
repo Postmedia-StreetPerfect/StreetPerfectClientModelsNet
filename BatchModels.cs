@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using System.Text.Json.Serialization;
 
@@ -106,15 +107,15 @@ namespace StreetPerfect.Models
         /// 
         /// | English Abbr. | French Abbr. | English Full Name | French Full Name |
         /// |---------------|--------------|-------------------|------------------|
-        /// | ‘UNIT’        | ‘UNITE’      | ‘UNIT’            | ‘UNITE’          |
-        /// | ‘APT’         | ‘APP’        | ‘APARTMENT’       | ‘APPARTMENT’ |
-        /// | ‘SUITE’       | ‘BUREAU’     | ‘SUITE’           | ‘BUREAU’ |
-        /// | ‘TH’          |              | ‘TOWNHOUSE’ |
-        /// | ‘TWNHSE’      |              | ‘TOWNHOUSE’ |
-        /// | ‘RM’          |              | ‘ROOM’  |
-        /// | ‘PH’          |              | ‘PENTHOUSE’  |
-        /// | ‘PIECE’       |              |                   | ‘PIECE’  |
-        /// | ‘SALLE’       |              |                   | ‘SALLE’ |
+        /// | UNIT          | UNITE        | UNIT              | UNITE          |
+        /// | APT           | APP          | APARTMENT         | APPARTMENT |
+        /// | SUITE         | BUREAU       | SUITE             | BUREAU |
+        /// | TH            |              | TOWNHOUSE |
+        /// | TWNHSE        |              | TOWNHOUSE |
+        /// | RM            |              | ROOM  |
+        /// | PH            |              | PENTHOUSE  |
+        /// |               |  PIECE       |                   | PIECE  |
+        /// |               |  SALLE       |                   | SALLE |
         /// </summary>
         /// <example>SUITE</example>
         public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
@@ -305,6 +306,7 @@ namespace StreetPerfect.Models
         ///  'Z'   transaction trace + sql statement trace
         /// </summary>
         /// <example>N</example>
+        [JsonIgnore]
         public string ProcessErrors { get; set; } = "N";
 
         //public string ReportByCompanyID { get; set; } = "SAMP";
@@ -318,6 +320,7 @@ namespace StreetPerfect.Models
         /// - Allowed values; 0 - 4 
         /// </summary>
         /// <example>2</example>
+        [Range(0, 4)]
         public int? ErrorTolerance { get; set; } = 2;
 
         /// <summary>
@@ -329,33 +332,34 @@ namespace StreetPerfect.Models
         public int? MaximumTryMessages { get; set; } = 5;
 
         /// <summary>
-        /// ‘Y’ Yes – standard correction processing occurs. Invalid or not correctable rural addresses returned as “I/N”. 
+        /// Y Yes – standard correction processing occurs. Invalid or not correctable rural addresses returned as “I/N”. 
         ///This setting maximizes actual address accuracy but minimizes CPC Certification Accuracy.
         ///
-        /// ‘N’ No – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
+        /// N No – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
         /// Increment "Questionable" LVR count. This setting minimizes actual address accuracy but maximizes CPC Certification Accuracy.
         ///
-        /// ‘Q’ Questionable – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
+        /// Q Questionable – If input PC Valid LVR PC and not correctable or was corrected and PC changed return input as V. 
         /// Increment "Questionable" LVR count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
         /// </summary>
         /// <example>Q</example>
         public string CorrectLvrAddress { get; set; } = "Q";
 
         /// <summary>
-        /// 
+        /// we don't know what this is
         /// </summary>
         /// <example>Q</example>
+        [JsonIgnore]
         public string CorrectLvrAmbiguity { get; set; } = "Q";
 
         /// <summary>
         /// Correct rural addresses
         /// 
-        /// ‘Y’ Yes – standard correction processing occurs. Invalid or	not correctable rural addresses returned as “I/N”. This setting maximizes actual address accuracy but minimizes CPC Certification Accuracy.
+        /// Y Yes – standard correction processing occurs. Invalid or	not correctable rural addresses returned as “I/N”. This setting maximizes actual address accuracy but minimizes CPC Certification Accuracy.
         /// 
-        /// ‘N’ No - If valid input address return input address as V. If valid rural PC input, return input address as V. Increment 
+        /// N No - If valid input address return input address as V. If valid rural PC input, return input address as V. Increment 
         ///"Questionable" rural count.This setting minimizes actual address accuracy but maximizes CPC Certification Accuracy.
         /// 
-        /// ‘Q’ Questionable – Attempt to correct record. If not	correctable but valid rural PC input, return input address as V.Increment 
+        /// Q Questionable – Attempt to correct record. If not	correctable but valid rural PC input, return input address as V.Increment 
         ///"Questionable" rural count and output Questionable message. This setting optimizes actual address accuracy and maximizes CPC Certification Accuracy.
         /// </summary>
         /// <example>Q</example>
@@ -376,7 +380,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         ///
-        ///   function to be performed for this run
+        ///   Function to be performed for this run
         ///   "C" for correction, "V" for validation, "P" for parse
         ///
         /// </summary>
@@ -385,7 +389,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         ///
-        /// Specifiy whether to prefix output with the StreetPerfect Correct/Validate status flag.
+        /// Specify whether to prefix output with the StreetPerfect Correct/Validate status flag.
         ///
         /// Canadian: 
         /// * 'I' Invalid
@@ -442,7 +446,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         ///
-        ///   First record in the file to start processing
+        ///   Enter number of header records – default = 1
         ///   
         ///   Note: This is strictly for bypassing header records which are written directly to the output file. 
         ///   If there is a header record requiring additional processing, 
@@ -451,19 +455,6 @@ namespace StreetPerfect.Models
         /// <example></example>
         public int? HeaderRecord { get; set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <example></example>
-        /// <example></example>
-        public int? HeaderRecordFields { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <example></example>
-        /// <example></example>
-        public int? HeaderRecordLength { get; set; }
 
         /// <summary>
         /// Record to start processing - one's based.
@@ -562,16 +553,18 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
-        /// Your Canada Post ID, used to customize the StreetPerfectBatchReport.txt file
+        /// Your Canada Post ID
+        /// 
+        /// These 5 batchReport* properties are used to customize your Statement of Accuracy 
+        /// (SOA) with your company name and address and created as StreetPerfectBatchReport.txt file
         /// 
         /// </summary>
         /// <example>YourCpcId</example>
-       public string BatchReportCompanyListId { get; set; }
+        public string BatchReportCompanyListId { get; set; }
 
         /// <summary>
         /// 
-        /// The next 4 properties are used to customize the StreetPerfectBatchReport.txt file
-        /// with your company name and address
+        /// Your company name
         /// 
         /// </summary>
         /// <example>Postmedia Network Inc</example>
@@ -579,7 +572,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
-        /// custom company address line 1
+        /// Custom company address line 1
         /// 
         /// </summary>
         /// <example>365 BLOOR ST E</example>
@@ -587,7 +580,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
-        /// custom company address line 2
+        /// Custom company address line 2
         /// 
         /// </summary>
         /// <example>Toronto ON M4W 3L4</example>
@@ -595,7 +588,7 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
-        /// custom company address line 3
+        /// Custom company address line 3
         /// 
         /// </summary>
         /// <example>Canada</example>
