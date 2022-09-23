@@ -114,8 +114,8 @@ namespace StreetPerfect.Models
         /// | TWNHSE        |              | TOWNHOUSE |
         /// | RM            |              | ROOM  |
         /// | PH            |              | PENTHOUSE  |
-        /// |               |  PIECE       |                   | PIECE  |
-        /// |               |  SALLE       |                   | SALLE |
+        /// 
+        /// 
         /// </summary>
         /// <example>SUITE</example>
         public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
