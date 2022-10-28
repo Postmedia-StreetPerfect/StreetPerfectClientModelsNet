@@ -43,7 +43,14 @@ namespace StreetPerfect.Models
         public int CodePage { get; set; }
     }
 
-    public class caBatchRunResponse
+	public class caBatchValidateResponse
+	{
+		public string Msg { get; set; }
+		public bool Passed { get; set; }
+	}
+
+
+	public class caBatchRunResponse
     {
         public string Status { get; set; }
         public string Msg { get; set; }
@@ -80,7 +87,7 @@ namespace StreetPerfect.Models
 
     public class BatchStatus
     {
-        public enum StatusType { Unknown, Error, Empty, Starting, Running, Stopping, Stopped, InputReady, OutputReady }
+        public enum StatusType { Unknown, RoleNotHeld, Error, Empty, Starting, Running, Stopping, Stopped, InputReady, OutputReady }
         public string Status { get; set; }
         public DateTime? StartTimeUtc { get; set; }
         public string Msg { get; set; }
@@ -445,16 +452,14 @@ namespace StreetPerfect.Models
         /// <example>L</example>
         public string AddressFormat { get; set; } = "L";
 
-        /// <summary>
-        ///
-        ///   Enter number of header records – default = 1
-        ///   
-        ///   Note: This is strictly for bypassing header records which are written directly to the output file. 
-        ///   If there is a header record requiring additional processing, 
-        ///   specify its position within the file - one's based.
-        /// </summary>
-        /// <example></example>
-        public int? HeaderRecord { get; set; }
+
+        //
+        //   Enter number of header records – default = 1
+        //   
+        //   Note: This is strictly for bypassing header records which are written directly to the output file. 
+        //   If there is a header record requiring additional processing, 
+        //   specify its position within the file - one's based.
+        //DEP public int? HeaderRecord { get; set; }
 
 
         /// <summary>
@@ -561,23 +566,49 @@ namespace StreetPerfect.Models
         /// 
         /// </summary>
         /// <example>YourCpcId</example>
+        /// 
         public string BatchReportCompanyListId { get; set; }
 
-        /// <summary>
+	    /// <summary>
+	    /// 
+	    /// Your company name
+	    /// 
+	    /// </summary>
+	    /// <example>Postmedia Network Inc</example>
         /// 
-        /// Your company name
-        /// 
-        /// </summary>
-        /// <example>Postmedia Network Inc</example>
-       public string BatchReportCompanyName { get; set; }
+	    public string BatchReportCompanyName { get; set; }
 
+		/// <summary>
+		/// 
+		/// Batch report name (defaults to company name)
+		/// 
+		/// </summary>
+		/// <example>Report for Postmedia Network Inc</example>
+		public string BatchReportName { get; set; }
+
+		/// <summary>
+		/// 
+		/// Batch report title (report sub heading)
+		/// 
+		/// </summary>
+		/// <example>StreetPerfect Point Of Call Correction Report</example>
+		public string BatchReportTitle { get; set; }
+
+		/// <summary>
+		/// 
+		/// Company officer name
+		/// 
+		/// </summary>
+		/// <example>your name</example>
+		public string BatchReportCompanyOfficer { get; set; }
+		
         /// <summary>
-        /// 
-        /// Custom company address line 1
-        /// 
-        /// </summary>
-        /// <example>365 BLOOR ST E</example>
-        public string BatchReportCompanyAddressOne { get; set; }
+		/// 
+		/// Custom company address line 1
+		/// 
+		/// </summary>
+		/// <example>365 BLOOR ST E</example>
+		public string BatchReportCompanyAddressOne { get; set; }
 
         /// <summary>
         /// 
