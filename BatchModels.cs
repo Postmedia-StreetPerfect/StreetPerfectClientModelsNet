@@ -1,5 +1,6 @@
 //using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -110,23 +111,27 @@ namespace StreetPerfect.Models
         [JsonIgnore]
         public string DatabaseOptions { get; set; }
 
-        /// <summary>
-        /// Defaults to 'SUITE'
-        /// 
-        /// | English Abbr. | French Abbr. | English Full Name | French Full Name |
-        /// |---------------|--------------|-------------------|------------------|
-        /// | UNIT          | UNITE        | UNIT              | UNITE          |
-        /// | APT           | APP          | APARTMENT         | APPARTMENT |
-        /// | SUITE         | BUREAU       | SUITE             | BUREAU |
-        /// | TH            |              | TOWNHOUSE |
-        /// | TWNHSE        |              | TOWNHOUSE |
-        /// | RM            |              | ROOM  |
-        /// | PH            |              | PENTHOUSE  |
-        /// 
-        /// 
-        /// </summary>
-        /// <example>SUITE</example>
-        public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
+		[SwaggerSchema(ReadOnly = true)]
+		public int ProgressInterval { get; set; }
+		
+
+		/// <summary>
+		/// Defaults to 'SUITE'
+		/// 
+		/// | English Abbr. | French Abbr. | English Full Name | French Full Name |
+		/// |---------------|--------------|-------------------|------------------|
+		/// | UNIT          | UNITE        | UNIT              | UNITE          |
+		/// | APT           | APP          | APARTMENT         | APPARTMENT |
+		/// | SUITE         | BUREAU       | SUITE             | BUREAU |
+		/// | TH            |              | TOWNHOUSE |
+		/// | TWNHSE        |              | TOWNHOUSE |
+		/// | RM            |              | ROOM  |
+		/// | PH            |              | PENTHOUSE  |
+		/// 
+		/// 
+		/// </summary>
+		/// <example>SUITE</example>
+		public string PreferredUnitDesignatorKeyword { get; set; } = "SUITE";
 
         /// <summary>
         /// Defaults to 'K'
