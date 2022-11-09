@@ -221,6 +221,9 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string postal_code { get; set; }
 
+		[DataMember]
+		public string country { get; set; }		
+		
 		/// <summary>
 		/// used if autocorrect is enabled
 		/// </summary>

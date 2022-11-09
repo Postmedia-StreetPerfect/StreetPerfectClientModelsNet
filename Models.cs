@@ -860,6 +860,9 @@ namespace StreetPerfect.Models
 
 		[DataMember]
 		public string postal_code { get; set; }
+
+		[DataMember]
+		public string country { get; set; }
 	}
 
 	[DataContract(Namespace =SPConst.DataNamespace)]
@@ -879,6 +882,9 @@ namespace StreetPerfect.Models
 
 		[DataMember]
 		public string postal_code { get; set; }
+
+		[DataMember]
+		public string country { get; set; }
 
 		[DataMember]
 		public string extra_information { get; set; }
@@ -915,6 +921,13 @@ namespace StreetPerfect.Models
 		public string address_type { get; set; }
 
 		[DataMember]
+		public string address_type_desc { get; set; }
+
+		[DataMember]
+		public string recipient { get; set; }
+
+		public string address_line { get; set; }
+		[DataMember]
 		public string street_number { get; set; }
 
 		[DataMember]
@@ -950,6 +963,28 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string service_area_qualifier { get; set; }
 
+
+		[DataMember]
+		public string city { get; set; }
+
+		[DataMember]
+		public string city_abbrev_long { get; set; }
+
+		[DataMember]
+		public string city_abbrev_short { get; set; }
+		
+		[DataMember]
+		public string province { get; set; }
+		
+		[DataMember]
+		public string postal_code { get; set; }
+		
+		[DataMember]
+		public string country { get; set; }
+	
+		[DataMember]
+		public string cpct_information { get; set; }
+		
 		[DataMember]
 		public string extra_information { get; set; }
 
@@ -1038,7 +1073,9 @@ namespace StreetPerfect.Models
 
 		[DataMember]
 		public string postal_code { get; set; }
-		//public string country { get; set; }
+
+		[DataMember]
+		public string country { get; set; }
 
 		[DataMember]
 		public string status_flag { get; set; }
@@ -1065,7 +1102,10 @@ namespace StreetPerfect.Models
 
 		[DataMember]
 		public string postal_code { get; set; }
-		//public string country { get; set; }
+
+		[DataMember]
+		public string country { get; set; }
+
 	}
 
 	[DataContract(Namespace =SPConst.DataNamespace)]
@@ -1112,7 +1152,10 @@ namespace StreetPerfect.Models
 
 		[DataMember]
 		public string postal_code { get; set; }
-		//public string country { get; set; }
+
+		[DataMember]
+		public string country { get; set; }
+
 	}
 
 	[DataContract(Namespace =SPConst.DataNamespace)]
@@ -1161,7 +1204,7 @@ namespace StreetPerfect.Models
 		/// Input: Requires CPC raw data range record in address line field <br/>
 		/// Output: Returns two 63-byte format address records in output array  <br/>
 		/// 
-		/// 
+		/// country
 		/// 16. Postal Code Search <br/>
 		/// Input: City and province <br/>
 		/// Output: Returns postal codes in the output array <br/>
@@ -1336,12 +1379,15 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string postal_code { get; set; }
 
+		[DataMember]
+		public string cntry_cde { get; set; }
+
 		/// <summary>
 		/// max records to return, 100 is default
 		/// </summary>
 		[DataMember]
 		public int? max_returned { get; set; } = 100;
-		//public string country { get; set; }
+
 	}
 
 	[DataContract(Namespace =SPConst.DataNamespace)]
