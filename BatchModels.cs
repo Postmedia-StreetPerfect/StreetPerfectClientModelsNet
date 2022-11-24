@@ -111,8 +111,8 @@ namespace StreetPerfect.Models
         [JsonIgnore]
         public string DatabaseOptions { get; set; }
 
-		[SwaggerSchema(ReadOnly = true)]
-		public int ProgressInterval { get; set; }
+		//[SwaggerSchema(ReadOnly = true)]
+		//public int ProgressInterval { get; set; }
 		
 
 		/// <summary>
