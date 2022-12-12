@@ -1,4 +1,3 @@
-//using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
@@ -108,12 +107,6 @@ namespace StreetPerfect.Models
         [JsonIgnore]
         public string DatabaseOptions { get; set; }
 
-<<<<<<< HEAD
-=======
-		//[SwaggerSchema(ReadOnly = true)]
-		//public int ProgressInterval { get; set; }
-		
->>>>>>> 839fa9c0f1c7c97fb02fe099b6a4f944deb5d2f2
 
 		/// <summary>
 		/// Defaults to 'SUITE'
