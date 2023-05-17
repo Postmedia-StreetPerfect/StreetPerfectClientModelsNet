@@ -12,7 +12,7 @@ namespace StreetPerfect.Models
 {
 	public class SPConst
 	{
-		public const string Version = "12.0.3";
+		public const string Version = "12.0.4";
 		public const string License = "Copyright © 1993-2023, Postmedia Network Inc";
 		public const string DataNamespace = "http://StreetPerfect.com/wcf/models/";
 		public const string ServiceNamespace = "http://StreetPerfect.com/wcf/";
