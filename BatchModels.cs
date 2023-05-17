@@ -69,17 +69,18 @@ namespace StreetPerfect.Models
 
     public class BatchRunInfo
     {
-        public int exitCode { get; set; }
+        public int? exitCode { get; set; }
         public string exitStatus { get; set; }
         public string exitMsg { get; set; }
-        public int runTimeSecs { get; set; }
-        public DateTime runTimeStart { get; set; }
-        public int totalProcessed { get; set; }
-        public int validAddresses { get; set; }
-        public int invalidAddresses { get; set; }
-        public int questionableLvrAddresses { get; set; }
-        public int questionableRuralAddresses { get; set; }
-        public int questionableApartmentAddresses { get; set; }
+        public int? runTimeSecs { get; set; }
+        public int? estTimeLeftSecs { get; set; }
+        public DateTime? runTimeStart { get; set; }
+        public int? totalProcessed { get; set; }
+        public int? validAddresses { get; set; }
+        public int? invalidAddresses { get; set; }
+        public int? questionableLvrAddresses { get; set; }
+        public int? questionableRuralAddresses { get; set; }
+        public int? questionableApartmentAddresses { get; set; }
     }
 
     public class BatchStatus
