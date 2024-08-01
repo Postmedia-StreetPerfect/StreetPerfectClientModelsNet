@@ -736,6 +736,9 @@ namespace StreetPerfect.Models
 		public HashSet<string> cpc_nrn_segs { get; set; }
 
 
+        /// <summary>
+        /// Experimental civic points data
+        /// </summary>
         [DataMember]
         public PointData[] points { get; set; }
 
@@ -747,6 +750,9 @@ namespace StreetPerfect.Models
 		public string orig_rec { get; set; }
 	}
 
+    /// <summary>
+    /// Experimental civic point data model
+    /// </summary>
     [DataContract(Namespace =SPConst.DataNamespace)]
     public class PointData
     {
