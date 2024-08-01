@@ -735,16 +735,35 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public HashSet<string> cpc_nrn_segs { get; set; }
 
-		/// <summary>
-		/// Original StreetPerfect internal record when debugging
-		/// </summary>	
 
-		[DataMember]
+        [DataMember]
+        public PointData[] points { get; set; }
+
+        /// <summary>
+        /// Original StreetPerfect internal record when debugging
+        /// </summary>	
+
+        [DataMember]
 		public string orig_rec { get; set; }
 	}
 
-	 
-	[DataContract(Namespace =SPConst.DataNamespace)]
+    [DataContract(Namespace =SPConst.DataNamespace)]
+    public class PointData
+    {
+        [DataMember]
+        public string apt { get; set; }
+        [DataMember]
+        public int? civ { get; set; }
+        [DataMember]
+        public string suf { get; set; }
+        [DataMember]
+        public double? x { get; set; }
+        [DataMember]
+        public double? y { get; set; }
+    }
+
+
+    [DataContract(Namespace =SPConst.DataNamespace)]
 	public class usAddress
 	{
 		/// <summary>
@@ -814,11 +833,12 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string LocationName { get; set; }
 
-		/// <summary>
-		/// Original StreetPerfect record when debugging
-		/// </summary>	
 
-		[DataMember]
+        /// <summary>
+        /// Original StreetPerfect record when debugging
+        /// </summary>	
+
+        [DataMember]
 		public string orig_rec { get; set; }
 	}
 
