@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 1591
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
 //using System.Text.Json.Serialization;
@@ -406,6 +407,21 @@ namespace StreetPerfect.Models
 	[DataContract(Namespace =SPConst.DataNamespace)]
 	public class caAddress
 	{
+        public caAddress() 
+        {
+            // I default these to blanks to keep backward compatibility - for the Aspen guys.
+            // as I mistakenly didn't originaly NULL them when serializing
+            // I'll need to contact them at some point...
+
+            st_adr_nbr_sfx_frm_cde = "";
+            st_adr_nbr_sfx_to_cde = "";
+            ste_frm_nbr = "";
+            ste_to_nbr = "";
+            route_serv_typ_dsc = "";
+            st_drctn_cde = "";
+
+        }
+
 		[DataMember]
 		public string id { get; set; }
 
@@ -529,7 +545,7 @@ namespace StreetPerfect.Models
 		/// </summary>
 
 		[DataMember]
-		public string st_adr_nbr_sfx_to_cde { get; set; }
+        public string st_adr_nbr_sfx_to_cde { get; set; }
 
 		/// <summary>
 		/// Suite to Number
@@ -538,7 +554,7 @@ namespace StreetPerfect.Models
 		/// </summary>
 
 		[DataMember]
-		public string ste_frm_nbr { get; set; }
+        public string ste_frm_nbr { get; set; }
 
 		/// <summary>
 		/// Municipality Name
@@ -547,7 +563,7 @@ namespace StreetPerfect.Models
 		/// </summary>
 
 		[DataMember]
-		public string ste_to_nbr { get; set; }
+        public string ste_to_nbr { get; set; }
 
 
 		/// <summary>
@@ -569,7 +585,7 @@ namespace StreetPerfect.Models
 		/// </summary>
 
 		[DataMember]
-		public string st_adr_nbr_sfx_frm_cde { get; set; }
+        public string st_adr_nbr_sfx_frm_cde { get; set; }
 
 
 		/// <summary>
@@ -595,7 +611,7 @@ namespace StreetPerfect.Models
 		/// </summary>
 
 		[DataMember]
-		public string route_serv_typ_dsc { get; set; }
+        public string route_serv_typ_dsc { get; set; }
 
 		/// <summary>
 		/// Route Service Number for type 2 records
@@ -735,16 +751,41 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public HashSet<string> cpc_nrn_segs { get; set; }
 
-		/// <summary>
-		/// Original StreetPerfect internal record when debugging
-		/// </summary>	
 
-		[DataMember]
+        /// <summary>
+        /// Experimental civic points data
+        /// </summary>
+        [DataMember]
+        public PointData[] points { get; set; }
+
+        /// <summary>
+        /// Original StreetPerfect internal record when debugging
+        /// </summary>	
+
+        [DataMember]
 		public string orig_rec { get; set; }
 	}
 
-	 
-	[DataContract(Namespace =SPConst.DataNamespace)]
+    /// <summary>
+    /// Experimental civic point data model
+    /// </summary>
+    [DataContract(Namespace =SPConst.DataNamespace)]
+    public class PointData
+    {
+        [DataMember]
+        public string apt { get; set; }
+        [DataMember]
+        public int? civ { get; set; }
+        [DataMember]
+        public string suf { get; set; }
+        [DataMember]
+        public double? x { get; set; }
+        [DataMember]
+        public double? y { get; set; }
+    }
+
+
+    [DataContract(Namespace =SPConst.DataNamespace)]
 	public class usAddress
 	{
 		/// <summary>
@@ -814,11 +855,12 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string LocationName { get; set; }
 
-		/// <summary>
-		/// Original StreetPerfect record when debugging
-		/// </summary>	
 
-		[DataMember]
+        /// <summary>
+        /// Original StreetPerfect record when debugging
+        /// </summary>	
+
+        [DataMember]
 		public string orig_rec { get; set; }
 	}
 
