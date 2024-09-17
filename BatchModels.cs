@@ -100,6 +100,9 @@ namespace StreetPerfect.Models
     public class BatchConfig
     {
         [JsonIgnore]
+        public string UserLicenseKey { get; set; }
+
+        [JsonIgnore]
         public string SPDatabasePath { get; set; }
 
         [JsonIgnore]
