@@ -559,6 +559,17 @@ namespace StreetPerfect.Models
         /// <example>true</example>
         public bool OverRideInputLanguageCode { get; set; } = true;
 
+
+        /// <summary>
+        /// 
+        ///   For output messages in French, set this to French,
+        ///   else English is default.
+        /// 
+        /// </summary>
+        /// <example>French</example>
+        public string UserLanguage { get; set; } = "English";
+
+
         /// <summary>
         /// 
         /// Your Canada Post ID
