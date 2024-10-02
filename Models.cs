@@ -738,6 +738,15 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string text_record_name_fr { get; set; }
 
+
+        /// <summary>
+        /// Census Subdivision Type
+        /// 
+        /// 
+        /// </summary>
+		[DataMember]
+		public string csd_type { get; set; }
+
 		/// <summary>
 		/// Country Code
 		/// </summary>

@@ -572,6 +572,31 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
+        ///   The output encoding you prefer for all output files. (utf8 is default)
+        /// 
+        ///   Possible (typical) encodings:
+        ///   - ascii, us-ascii
+        ///   - cp1252, windows-1252
+        ///   - latin, latin1, iso-8859-1
+        ///   - utf8
+        ///   
+        /// </summary>
+        public string OutputEncoding { get; set; } = "utf8";
+
+
+        /// <summary>
+        /// 
+        ///   The output line ending you prefer for all output files. (windows 'crlf' is default)
+        ///     
+        ///   - crlf (or blank) = windows carriage return/line feed
+        ///   - lf = unix/mac line feed
+        ///
+        /// </summary>
+        public string OutputLineEnding { get; set; } = "crlf";
+
+
+        /// <summary>
+        /// 
         /// Your Canada Post ID
         /// 
         /// These 5 batchReport* properties are used to customize your Statement of Accuracy 
@@ -582,14 +607,16 @@ namespace StreetPerfect.Models
         /// 
         public string BatchReportCompanyListId { get; set; }
 
+
 	    /// <summary>
 	    /// 
-	    /// Your company name
+	    /// Your company name for your batch report
 	    /// 
 	    /// </summary>
 	    /// <example>Postmedia Network Inc</example>
         /// 
 	    public string BatchReportCompanyName { get; set; }
+
 
 		/// <summary>
 		/// 
@@ -599,6 +626,7 @@ namespace StreetPerfect.Models
 		/// <example>Report for Postmedia Network Inc</example>
 		public string BatchReportName { get; set; }
 
+
 		/// <summary>
 		/// 
 		/// Batch report title (report sub heading)
@@ -607,37 +635,33 @@ namespace StreetPerfect.Models
 		/// <example>StreetPerfect Point Of Call Correction Report</example>
 		public string BatchReportTitle { get; set; }
 
-		/// <summary>
-		/// 
-		/// Company officer name
-		/// 
-		/// </summary>
-		/// <example>your name</example>
-		public string BatchReportCompanyOfficer { get; set; }
 		
         /// <summary>
 		/// 
-		/// Custom company address line 1
+		/// Your company address line 1 for your Batch report
 		/// 
 		/// </summary>
 		/// <example>365 BLOOR ST E</example>
 		public string BatchReportCompanyAddressOne { get; set; }
 
+
         /// <summary>
         /// 
-        /// Custom company address line 2
+        /// Your company address line 2 for your Batch report
         /// 
         /// </summary>
         /// <example>Toronto ON M4W 3L4</example>
         public string BatchReportCompanyAddressTwo { get; set; }
 
+
         /// <summary>
         /// 
-        /// Custom company address line 3
+        /// Your company address line 3 for your Batch report
         /// 
         /// </summary>
         /// <example>Canada</example>
         public string BatchReportCompanyAddressThree { get; set; }
+
 
         /// <summary>
         ///
@@ -667,7 +691,7 @@ namespace StreetPerfect.Models
         /// the example values are setup for a comma delimited data file with a heading: key,addressee,address,city,province,postal_code
         /// </summary>
         /// <example>1</example>
-        public int InputKeyOffset { get; set; } = 7;
+        public int InputKeyOffset { get; set; }
         public int? InputKeyLength { get; set; }
         public int? InputLanguageOffset { get; set; }
         public int? InputLanguageLength { get; set; }
