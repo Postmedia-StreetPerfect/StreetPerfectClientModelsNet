@@ -770,7 +770,6 @@ namespace StreetPerfect.Models
         /// <summary>
         /// Original StreetPerfect internal record when debugging
         /// </summary>	
-
         [DataMember]
 		public string orig_rec { get; set; }
 	}
@@ -781,14 +780,43 @@ namespace StreetPerfect.Models
     [DataContract(Namespace =SPConst.DataNamespace)]
     public class PointData
     {
+        /// <summary>
+        /// 
+        /// Apartment/Suite number
+        /// 
+        /// </summary>
         [DataMember]
         public string apt { get; set; }
+
+        /// <summary>
+        /// 
+        /// Civic/Street number
+        /// 
+        /// </summary>
         [DataMember]
         public int? civ { get; set; }
+
+        /// <summary>
+        /// 
+        /// Civic number suffix
+        /// 
+        /// </summary>
         [DataMember]
         public string suf { get; set; }
+
+        /// <summary>
+        /// 
+        /// Latitude of this civic end point
+        /// 
+        /// </summary>
         [DataMember]
         public double? x { get; set; }
+
+        /// <summary>
+        /// 
+        /// Longitude of this civic end point
+        /// 
+        /// </summary>
         [DataMember]
         public double? y { get; set; }
     }
