@@ -69,18 +69,25 @@ namespace StreetPerfect.Models
 
     public class BatchRunInfo
     {
-        public int? exitCode { get; set; }
-        public string exitStatus { get; set; }
-        public string exitMsg { get; set; }
-        public int? runTimeSecs { get; set; }
-        public int? estTimeLeftSecs { get; set; }
-        public DateTime? runTimeStart { get; set; }
-        public int? totalProcessed { get; set; }
-        public int? validAddresses { get; set; }
-        public int? invalidAddresses { get; set; }
-        public int? questionableLvrAddresses { get; set; }
-        public int? questionableRuralAddresses { get; set; }
-        public int? questionableApartmentAddresses { get; set; }
+        public void Init()
+        {
+            RunTimeSecs = 0;
+            EstTimeLeftSecs = 0;
+			TotalProcessed = 0;
+			RunTimeStart = DateTime.UtcNow;
+		}
+        public int? ExitCode { get; set; }
+        public string ExitStatus { get; set; }
+        public string ExitMsg { get; set; }
+        public int? RunTimeSecs { get; set; }
+        public int? EstTimeLeftSecs { get; set; }
+        public DateTime? RunTimeStart { get; set; }
+        public int? TotalProcessed { get; set; }
+        public int? ValidAddresses { get; set; }
+        public int? InvalidAddresses { get; set; }
+        public int? QuestionableLvrAddresses { get; set; }
+        public int? QuestionableRuralAddresses { get; set; }
+        public int? QuestionableApartmentAddresses { get; set; }
     }
 
     public class BatchStatus
@@ -487,7 +494,7 @@ namespace StreetPerfect.Models
         ///
         /// </summary>
         /// <example>0</example>
-        public int? FieldsPerRecord { get; set; }
+        public int? FieldsPerRecord { get; set; } = 0;
 
         /// <summary>
         ///
@@ -691,7 +698,7 @@ namespace StreetPerfect.Models
         /// the example values are setup for a comma delimited data file with a heading: key,addressee,address,city,province,postal_code
         /// </summary>
         /// <example>1</example>
-        public int InputKeyOffset { get; set; }
+        public int InputKeyOffset { get; set; } 
         public int? InputKeyLength { get; set; }
         public int? InputLanguageOffset { get; set; }
         public int? InputLanguageLength { get; set; }
