@@ -604,15 +604,6 @@ namespace StreetPerfect.Models
 
         /// <summary>
         /// 
-<<<<<<< .mine
-        /// Optionally add your data input file back into the output zip file.
-        /// 
-        /// Note that this file is a lightly processed version of your original input file. 
-        /// The encoding and/or line endings may be different.
-        /// 
-        /// </summary>
-        public bool AddInputFileToOutputZip { get; set; }
-=======
 		/// Optionally add your data input file back into the output zip file.
 		/// 
 		/// Note that this file is a lightly processed version of your original input file. 
@@ -620,16 +611,10 @@ namespace StreetPerfect.Models
 		/// 
 		/// </summary>
 		public bool AddInputFileToOutputZip { get; set; }
->>>>>>> .theirs
 
 
-<<<<<<< .mine
-        /// <summary>
-        /// 
-=======
 		/// <summary>
 		/// 
->>>>>>> .theirs
         /// Your Canada Post ID
         /// 
         /// These 5 batchReport* properties are used to customize your Statement of Accuracy 
