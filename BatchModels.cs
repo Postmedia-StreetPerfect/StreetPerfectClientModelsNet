@@ -610,7 +610,7 @@ namespace StreetPerfect.Models
 		/// The encoding and/or line endings may be different.
 		/// 
 		/// </summary>
-		public bool AddInputFileToZip { get; set; }
+		public bool AddInputFileToOutputZip { get; set; }
 
 
 		/// <summary>
