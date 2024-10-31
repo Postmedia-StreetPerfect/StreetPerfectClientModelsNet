@@ -602,17 +602,28 @@ namespace StreetPerfect.Models
         public string OutputLineEnding { get; set; } = "crlf";
 
 
-        /// <summary>
-        /// 
-        /// Your Canada Post ID
-        /// 
-        /// These 5 batchReport* properties are used to customize your Statement of Accuracy 
-        /// (SOA) with your company name and address and created as StreetPerfectBatchReport.txt file
-        /// 
-        /// </summary>
-        /// <example>YourCpcId</example>
-        /// 
-        public string BatchReportCompanyListId { get; set; }
+		/// <summary>
+		/// 
+		/// Optionally add your data input file back into the output zip file.
+		/// 
+		/// Note that this file is a lightly processed version of your original input file. 
+		/// The encoding and/or line endings may be different.
+		/// 
+		/// </summary>
+		public bool AddInputFileToZip { get; set; }
+
+
+		/// <summary>
+		/// 
+		/// Your Canada Post ID
+		/// 
+		/// These 5 batchReport* properties are used to customize your Statement of Accuracy 
+		/// (SOA) with your company name and address and created as StreetPerfectBatchReport.txt file
+		/// 
+		/// </summary>
+		/// <example>YourCpcId</example>
+		/// 
+		public string BatchReportCompanyListId { get; set; }
 
 
 	    /// <summary>
