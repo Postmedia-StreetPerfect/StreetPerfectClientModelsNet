@@ -1,7 +1,13 @@
-using Microsoft.AspNetCore.Http;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+
+// I've made this optional as IFormFile causes issues with legacy apps as Microsoft.AspNetCore.Http is deprecated
+// for batch upload use /api/1/ca/batch/upload instead of /api/1/ca/batch/upload/form
+// (form upload should never have been added for an api....)
+#if USE_FORM_UPLOAD
+using Microsoft.AspNetCore.Http;
+#endif
 
 namespace StreetPerfect.Models
 {
@@ -14,6 +20,7 @@ namespace StreetPerfect.Models
         public string Data { get; set; }
     }
 
+#if USE_FORM_UPLOAD
     public class BatchUploadForm
     {
         /// <summary>
@@ -33,6 +40,7 @@ namespace StreetPerfect.Models
         /// </summary>
         public bool is_zipped { get; set; } = false;
     }
+#endif
 
     public class BatchEncoding
     {
