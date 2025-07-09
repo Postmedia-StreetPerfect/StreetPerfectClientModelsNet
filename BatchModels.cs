@@ -717,7 +717,7 @@ namespace StreetPerfect.Models
         /// the example values are setup for a comma delimited data file with a heading: key,addressee,address,city,province,postal_code
         /// </summary>
         /// <example>1</example>
-        public int InputKeyOffset { get; set; }
+        public int? InputKeyOffset { get; set; }
 
         public int? InputKeyLength { get; set; }
         public int? InputLanguageOffset { get; set; }
