@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Humanizer;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -47,6 +48,23 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public bool tokenize_qry { get; set; }
 
+        /// <summary>
+        /// Include the National Address Registry (NAR) addresses in the search that are not in the Canada Post data.
+        /// 
+        /// NAR records have a caAddress.rec_typ_cde of 6
+        /// </summary>
+		[DataMember]
+		public bool nar_inclusive { get; set; }
+
+        /// <summary>
+        /// Exclusively search the National Address Registry (NAR) addresses that are not in the Canada Post data.
+        /// 
+        /// Note that users can exclusively search the unique NAR addresses by prepending 'nar ' (w/trailing spaced) to the search string.
+        /// 
+        /// NAR records have a caAddress.rec_typ_cde of 6
+        /// </summary>
+		[DataMember]
+		public bool nar_exclusive { get; set; }
 
 		/// <summary>
 		/// The maximum number of results to return, actual maximum is 200. Null or zero returns default max of 20.
