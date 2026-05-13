@@ -690,7 +690,7 @@ namespace StreetPerfect.Models
 		/// <summary>
 		/// Postal Code
 		///
-		/// A ten character, alpha numeric combination (ANANAN) assigned to one or more postal addresses. The postal code is an integral part of every postal address in Canada and is required for the mechanized processing of mail. Postal codes are also used to identify various CPC processing facilities and delivery installations.
+		/// A 6 character, alpha numeric combination (ANANAN) assigned to one or more postal addresses. The postal code is an integral part of every postal address in Canada and is required for the mechanized processing of mail. Postal codes are also used to identify various CPC processing facilities and delivery installations.
 		/// </summary>
 
 		[DataMember]

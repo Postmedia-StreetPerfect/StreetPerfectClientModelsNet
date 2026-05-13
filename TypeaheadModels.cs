@@ -169,7 +169,138 @@ namespace StreetPerfect.Models
 	}
 
 
-	[DataContract(Namespace = SPConst.DataNamespace)]
+    [DataContract(Namespace = SPConst.DataNamespace)]
+    public class caTypeaheadCityRequest
+    {
+        /// <summary>
+        /// The user entered address search line
+        /// </summary>
+        [DataMember]
+        public string address_line { get; set; }
+
+        /// <summary>
+        /// Allows the query to be restricted to a specific city.  City searches are prefixed (like a trailing wildcard; miss*)
+        /// and dashes are ignored so users can use them or not.
+        /// </summary>
+        [DataMember]
+        public string city { get; set; }
+
+        /// <summary>
+        /// Allows the query to be restricted to a province. Use the 2 letter province notation.
+        /// </summary>
+        [DataMember]
+        public string province { get; set; }
+
+
+        /// <summary>
+        /// Allows the query to be restricted to a postal code. (Will also be treated with a trailing wildcard; l5n*)
+        /// </summary>
+        [DataMember]
+        public string postal_code { get; set; }
+
+        /// <summary>
+        /// Tokenizes the users address_line causing each token to be (prefixed) searched through the full address.
+        /// </summary>
+        [DataMember]
+        public bool tokenize_qry { get; set; }
+
+        /// <summary>
+        /// The maximum number of results to return, actual maximum is 200. Null or zero returns default max of 20.
+        /// </summary>
+
+        [DataMember]
+        public int? max_returned { get; set; }
+
+
+        /// <summary>
+        /// The record to start returning records at. Used for paging large result sets. Record numbering starts at zero.
+        /// </summary>
+        [DataMember]
+        public int? start_rec { get; set; }
+
+    }
+
+
+
+    [DataContract(Namespace = SPConst.DataNamespace)]
+    public class caTypeaheadCityResponse
+    {
+        /// <summary>
+        /// Number of returned addresses
+        /// </summary>
+        [DataMember]
+        public int count { get; set; }
+
+        /// <summary>
+        /// Starting address record. (passed in caTypeaheadRequest)
+        /// </summary>
+        [DataMember]
+        public int start_rec { get; set; }
+
+        /// <summary>
+        /// The total number of records that match the search. This can be greater than count.
+        /// </summary>
+        [DataMember]
+        public int total_hits { get; set; }
+
+
+        /// <summary>
+        /// The returned addresses, each has an Id and a display string. Use the FetchById API to get the full address on user selection.
+        /// 
+        /// Will be null/missing for normal typeahead
+        /// </summary>
+        [DataMember]
+        public List<caCityProvPostalCode> recs { get; set; }
+
+
+        /// <summary>
+        /// Server-side execution time in milliseconds
+        /// </summary>
+        [DataMember]
+        public long t_exec_ms { get; set; }
+
+        [DataMember]
+        public string status_flag { get; set; }
+
+        [DataMember]
+        public string status_messages { get; set; }
+    }
+
+    public class caCityProvPostalCode
+    {
+        /// <summary>
+        /// Municipality Name
+        /// 
+        /// A municipality is any village, town or city in Canada that is recognized as a valid mailing address by Canada Post.
+        /// </summary>
+
+        [DataMember]
+        public string mncplt_nme { get; set; }        
+        
+        
+        /// <summary>
+        /// Province Code
+        /// 
+        /// Alphabetic code identifying the province geographically. Valid values are accessible through a query function.
+        /// </summary>
+
+        [DataMember]
+        public string prov_cde { get; set; }
+
+
+        /// <summary>
+        /// Postal Code
+        ///
+        /// A 6 character, alpha numeric combination (ANANAN) assigned to one or more postal addresses. The postal code is an integral part of every postal address in Canada and is required for the mechanized processing of mail. Postal codes are also used to identify various CPC processing facilities and delivery installations.
+        /// </summary>
+
+        [DataMember]
+        public string pstl_cde { get; set; }
+    }
+
+
+
+    [DataContract(Namespace = SPConst.DataNamespace)]
 	public class caTypeaheadFetchRequest
 	{
 		[DataMember]
