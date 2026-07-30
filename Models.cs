@@ -597,20 +597,45 @@ namespace StreetPerfect.Models
 		[DataMember]
 		public string mncplt_nme { get; set; }
 
-		//not used public int? route_serv_box_to_nbr { get; set; }
-		//not used public int? route_serv_box_frm_nbr { get; set; }
 
-		/// <summary>
-		/// Route Service Type Description for type 2 records
-		///
-		/// The code that identifies the type of route service. Valid values are: 
-		/// - RR - Rural Route 
-		/// - SS - Suburban Service 
-		/// - MR - Mobile Route 
-		/// - GD - General Delivery 
-		/// </summary>
+        /// <summary>
+        /// Alternate Municipality Name
+        /// </summary>
+        /// 
+        [DataMember]
+        public string alt_mncplt_nme { get; set; }
 
-		[DataMember]
+
+        /// <summary>
+        /// Abbreviated Municipality Name, 13 chars max length
+        /// </summary>
+        /// 
+        [DataMember]
+        public string abv_mncplt_nme13 { get; set; }
+
+
+        /// <summary>
+        /// Abbreviated Municipality Name, 18 chars max length
+        /// </summary>
+        /// 
+        [DataMember]
+        public string abv_mncplt_nme18 { get; set; }
+
+
+        //not used public int? route_serv_box_to_nbr { get; set; }
+        //not used public int? route_serv_box_frm_nbr { get; set; }
+
+        /// <summary>
+        /// Route Service Type Description for type 2 records
+        ///
+        /// The code that identifies the type of route service. Valid values are: 
+        /// - RR - Rural Route 
+        /// - SS - Suburban Service 
+        /// - MR - Mobile Route 
+        /// - GD - General Delivery 
+        /// </summary>
+
+        [DataMember]
         public string route_serv_typ_dsc { get; set; }
 
 		/// <summary>
